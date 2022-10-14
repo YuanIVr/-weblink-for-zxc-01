@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .center-box {
+                margin: auto;
+            }
+
+            td {
+                /*border: #ff0000 solid 1px; /*DEBUG 应该注释掉*/
+                text-align:center;
+                vertical-align: bottom;
+                margin: 0px;
+            }
+
+            .r-button {
+                border: #787878 solid 2px;
+                border-width: 3px 3px 0px 3px;
+                border-radius: 5px 5px 0px 0px;
+                background:rgba(1, 0, 0, 0);
+				text-decoration: none;
+                color:black;
+                padding: 10px;
+                cursor: pointer;
+            }
+            .r-button:hover {
+                background: rgba(0, 0, 0, 0.1);
+            }
+
+            .alpha-button {
+                transition: all 0.2s ease 0.1s;
+                cursor: pointer;
+            }
+                .alpha-button:hover {
+                transform: scale(1.1, 1.1);
+            }
+
+        </style>
+		<script>
+		
+		// 存储了主页的滚动图片url列表
+		var home_img_list = [ "./homeimgs/1626162132262.jpeg" ];
+		// 帧间隔，单位：毫秒
+		var fwt = 15;
+		// 当前图片id
+		var nid = 0;
+		// 图片组件
+		var homeImage;
+		
+		// 初始化，获取需要的网页组件
+		function homeAniLoad() {
+			homeImage = document.getElementById("home_img");
+		}
+		
+		// 动画滚动的帧函数，帧时间tt，总时长t
+		function aniFrame(tt, t, did) {
+			
+			var p = Math.abs(Math.cos(tt / t * Math.PI));
+			homeImage.style.transform = "scaleX(" + p + ")";
+			if (tt > t / 2) {
+				homeImage.src = home_img_list[((nid + did) % home_img_list.length + home_img_list.length) % home_img_list.length];
+			}
+			
+			if (tt < t) {
+				setTimeout(aniFrame, fwt, tt + fwt, t, did);
+			} else {
+				nid += did;
+			}
+		}
+		
+		// 模拟滚动切换图片，切换到did索引到的home_img_list中的图片（相对索引），动画时间为t
+		function changeHomeImgTo(did, t) {
+			setTimeout(aniFrame, 10, 0, t * 1000, did);
+		}
+		
+		// 添加图片函数
+		function addHomeImg(src) {
+			home_img_list[home_img_list.length] = src;
+		}
+		
+		</script>
+    </head>
+    <body style="background-image: url(./bg.jpg); background-size: cover; background-repeat:no-repeat;">
+
+        <table class="center-box" style="width: 100%; background: #555;">
+			<tr>
+				<td style="width: 20%; text-align: left; padding: 5px 10px; color: #66FFCC;">
+					<a class="alpha-button" href="index.html" style="color: #66FFCC">首页</a>
+				</td>
+				<td style="width: 60%; color: #fff; font-size: 20px;">
+					<a class="alpha-button">gamemakers游戏开发社团</a>
+				</td>
+				<td style="width: 20%; text-align: right; padding: 7px 22px; color: #66FFCC;">
+					<a href="form.html" class="alpha-button" style="color: #66FFCC">加入我们</a>
+				</td>
+			</tr>
+		</table>
+
+		<table class="center-box" style="height: 10px; width: 100%; margin-top: 0px; background: rgba(255, 255, 255, 0);">
+			<tr>
+				<td><td style="width: 6%;color: #fff;"></td>
+				<td><a class="r-button" href="overview.html"><b>社团概况</b></a></td>
+				<td><td style="width: 3%;color: #fff;"></td>
+				<td><a class="r-button" href="member.html"><b>成员组成</b></a></td>
+				<td><td style="width: 3%;color: #fff;"></td>
+				<td><a class="r-button" href="active.html"><b>活动记录</b></a></td>
+				<td><td style="width: 3%;color: #fff;"></td>
+				<td style="height: 100px;">
+					<img style="width: 130px;" src="log.png" />
+					<br />
+					<span style="font-size: medium; border-width: 0 0 1px 0; border-color: #000000; border-style: solid;">
+						&nbsp;make your world&nbsp;
+					</span>
+				</td>
+				<td><td style="width: 3%;color: #fff;"></td>
+				<td><a class="r-button" href="works.html"><b>作品展示</b></a></td>
+				<td><td style="width: 3%;color: #fff;"></td>
+				<td><a class="r-button" href="wait.html"><b>社团论坛</b></a></td>
+				<td><td style="width: 3%;color: #fff;"></td>
+				<td><a class="r-button" href="wait.html"><b>资源共享</b></a></td>
+				<td><td style="width: 6%;color: #fff;"></td>
+			  </tr>
+		</table>
+		<table class="center-box" style="width: 90%; margin-top: 0px;">
+			<tr>
+				<td>
+					<div style="height: 32px;">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="alpha-button" style="width: 10%; height: 10%; font-size: 48px; vertical-align:middle;">
+					<span style="float: left;" onclick="changeHomeImgTo(-1, 0.4)">
+						《
+					</span>
+				</td>
+				<td style="border: #676767 solid 0px;">
+					<img id="home_img" style="max-width: 100%; width: auto; height: 31.25rem; box-shadow: 3px 3px 5px 4px rgba(1, 0, 0, 0.4);" src="./homeimgs/1626162132262.jpeg" />
+				</td>
+				<td class="alpha-button" style="width: 10%; height: 10%; font-size: 48px; vertical-align: middle;">
+					<span style="float: right;" onclick="changeHomeImgTo(1, 0.7)">
+						》
+					</span>
+				</td>
+			</tr>
+		</table>
+		<script>
+		homeAniLoad();
+		addHomeImg("./homeimgs/2D82638A97C448FE0A7C4C2A38091285.png");
+		addHomeImg("./homeimgs/6E5FB9416060A476FA651910D52ADA01.png");
+		addHomeImg("./homeimgs/498BD4B3C9B239D4FAFFC8808BA5F013.jpg");
+		addHomeImg("./homeimgs/637F7E70D149CCE08BD481A65497727A.png");
+		addHomeImg("./homeimgs/022B341D6D6901A7F04AA6D1691CADD4.jpg");
+		addHomeImg("./homeimgs/4265A37A9E7D212C36DB5113466D1FBB.jpg");
+		addHomeImg("./homeimgs/A1A31B096B15CEA3A66CC51D4B79DC02.jpg");
+		addHomeImg("./homeimgs/B60929F44A8A5C39F9ABDE0E1AE83887.png");
+		// addHomeImg("./homeimgs/");
+		</script>
+	</body>
+</html>
